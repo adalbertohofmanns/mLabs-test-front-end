@@ -1,11 +1,16 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <section id="app">
+      <div id="nav">
+        <div><span>23/09/2019 10:56:59</span></div>
+        <div><span>MINHA CONTA <a href="javascript:;">v</a></span></div>
+        <div><span>*</span></div>
+      </div>
+      <div id="menu">
+        <router-link to="/">Home</router-link>
+        <!-- <router-link to="/about">About</router-link> -->
+      </div>
+      <router-view />
+  </section>
 </template>
 
 <style lang="scss">
