@@ -1,34 +1,74 @@
 <template>
-  <section id="app">
-      <div id="nav">
-        <div><span>23/09/2019 10:56:59</span></div>
-        <div><span>MINHA CONTA <a href="javascript:;">v</a></span></div>
-        <div><span>*</span></div>
+  <section>
+    <div class="bd-gray">
+      <div class="ml-container ml-header">
+        <div class="ml-header-time"><span>23/09/2019 10:56:59</span></div>
+        <div class="ml-header-my-account-link"><span>MINHA CONTA <a href="javascript:;">v</a></span></div>
+        <div class="ml-header-engine"><span>*</span></div>
       </div>
-      <div id="menu">
-        <router-link to="/">Home</router-link>
-        <!-- <router-link to="/about">About</router-link> -->
-      </div>
-      <router-view />
-  </section>
+    </div>
+    <div>
+      <router-view /> 
+    </div>
+  </section> 
 </template>
+<style lang="sass">
+@import url('https://fonts.googleapis.com/css?family=Exo&display=swap');
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+*
+  padding: 0
+  margin: 0
+  box-sizing: border-box
+
+html, body
+  height: 100vh
+
+body
+  font-family: 'Exo', sans-serif
+
+.bd-gray
+  background-color: #3a3a3a
+
+.bg-whitesmoke
+  background-color: #f7f7f7
+
+.bB
+  border-bottom: 1.5px solid #d2d3d3
+
+.ml-container
+  margin: 0 auto
+  max-width: 1190px
+
+.ml-header
+  height: 32px
+  display: flex
+  justify-content: space-between
+  color: #fff
+  align-items: center
+  font-size: 12px
+
+  &-time,
+  &-my-account-link,
+  &-engine
+    width: 33%
+    padding: 0 15px
+ 
+  &-my-account-link
+    text-align: center
+
+    a
+      font-size: 9px
+      text-decoration: none
+      color: #fff
+      position: relative
+      bottom: 3px
+      padding: 0 10px
+
+  &-engine
+    text-align: right
+    font-size: 32px
+    top: 5px
+    position: relative
+
+    
 </style>
