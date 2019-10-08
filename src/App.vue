@@ -26,7 +26,7 @@
         </nav>
       </div>
     </div>
-    <div>
+    <div> 
       <router-view /> 
     </div>
   </section> 
@@ -205,6 +205,10 @@ body
 
       &:hover
         transform: scale(1.1)
+        border: none
+        -webkit-box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
+        -moz-box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
+        box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
 
       img.social-logo
         width: 57px
