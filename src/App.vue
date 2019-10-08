@@ -2,7 +2,7 @@
   <section>
     <div class="bd-gray">
       <div class="ml-container ml-header">
-        <div class="ml-header-time"><span>23/09/2019 10:56:59</span></div>
+        <div class="ml-header-time"><clock></clock></div>
         <div class="ml-header-my-account-link"><a href="">MINHA CONTA<i class="ml-header-my-account-link-down"></i></a></div>
         <div class="ml-header-engine"><div class="ml-header-engine-config"></div></div>
       </div>
@@ -31,6 +31,19 @@
     </div>
   </section> 
 </template>
+
+<script>
+// @ is an alias to /src
+import Clock from "@/components/Clock.vue";
+
+export default {
+  name: "home",
+  components: {
+    Clock
+  }
+};
+</script>
+
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css?family=Exo&display=swap');
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
@@ -187,6 +200,11 @@ body
       align-items: center
       flex-direction: column
       justify-content: center
+      -webkit-transition: 0.3s all ease-in
+      transition: 0.3s all ease-in
+
+      &:hover
+        transform: scale(1.1)
 
       img.social-logo
         width: 57px
