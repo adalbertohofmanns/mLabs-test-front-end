@@ -183,19 +183,23 @@ body
 
 .ml-content
   padding: 40px 0
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
 
   ul
     display: flex
     flex-wrap: wrap
     list-style: none
+    justify-content: center
 
     li
       text-align: center
-      min-width: 222px
+      width: 240px
       min-height: 218px
       border: dotted 2px #d2d3d3
       background-color: #eff0f0
-      padding: 30px
+      padding: 15px 0px
       display: flex
       align-items: center
       flex-direction: column
@@ -235,6 +239,6 @@ body
         color: #fff
         font-size: 15px
         border: none
-        border-radius: 5px
+        border-radius: 3px
 
 </style>
