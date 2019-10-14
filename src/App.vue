@@ -45,8 +45,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import url('https://fonts.googleapis.com/css?family=Exo&display=swap');
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url('https://fonts.googleapis.com/css?family=Exo&display=swap')
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
 
 @font-face
   font-family: 'prime'
@@ -77,7 +77,7 @@ body
 
 .ml-container
   margin: 0 auto
-  max-width: 1200px
+  max-width: 1160px
 
 .ml-header
   height: 32px
@@ -86,12 +86,15 @@ body
   color: #fff
   align-items: center
   font-size: 12px
+  max-width: 1140px
 
+  &-time
+    padding: 0px
   &-time,
   &-my-account-link,
   &-engine
     width: 33%
-    padding: 0 15px
+    padding: 0 10px
 
   &-time
     font-family: Arial, Helvetica, sans-serif
@@ -144,6 +147,9 @@ body
         margin: 0 auto
         padding-bottom: 10px
 
+  &-nav
+    font-size: 14px
+
   &-nav ul
     display: flex
     justify-content: center
@@ -153,11 +159,11 @@ body
     li
       text-align: center
       min-width: auto
-      height: 90px
+      height: 86px
       display: flex
       justify-content: center
       align-items: flex-end
-      padding: 15px 16px 10px
+      padding: 15px 18px 15px
 
       img
         opacity: 0.5
@@ -183,21 +189,17 @@ body
 
 .ml-content
   padding: 40px 0
-  display: flex
-  flex-wrap: wrap
-  justify-content: center
-
-  ul
+  
+  .ml-social
     display: flex
     flex-wrap: wrap
     list-style: none
     justify-content: center
 
-    li
+    &-network 
       text-align: center
-      width: 240px
-      min-height: 218px
-      border: dotted 2px #d2d3d3
+      min-height: 226px
+      border: 2px dotted #cbcccd
       background-color: #eff0f0
       padding: 15px 0px
       display: flex
@@ -206,13 +208,6 @@ body
       justify-content: center
       -webkit-transition: 0.3s all ease-in
       transition: 0.3s all ease-in
-
-      &:hover
-        transform: scale(1.1)
-        border: none
-        -webkit-box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
-        -moz-box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
-        box-shadow: 0px 0px 54px 0px rgba(0,0,0,0.75)
 
       img.social-logo
         width: 57px
@@ -230,7 +225,6 @@ body
         color: #535353
         padding-top: 15px
 
-
       button
         width: 90px
         height: 30px
@@ -240,5 +234,48 @@ body
         font-size: 15px
         border: none
         border-radius: 3px
+
+@media screen and (min-width: 180px) and (max-width: 712px)
+  .ml-social-network
+    border: 2px dotted #cbcccd
+    width: 100% !important
+
+  .ml-social-network:not(:last-child)
+    border-bottom: none
+
+@media screen and (min-width: 712px)
+  .ml-social-network
+    border: 2px dotted #cbcccd
+    width: 232px
+
+  .ml-social-network:not(:last-child)
+    border-right: none
+
+@media screen and (min-width: 712px) and (max-width: 942px)
+  .ml-social-network:nth-child(3n)
+    border-right: 2px dotted #cbcccd
+
+  .ml-social-network:nth-child(n+4)
+    border-top: none
+
+@media screen and (min-width: 942px) and (max-width: 1174px)
+  .ml-social-network:nth-child(5n)
+    border-right: none
+
+  .ml-social-network:nth-child(4n)
+    border-right: 2px dotted #cbcccd
+
+  .ml-social-network:nth-child(n+5)
+    border-top: none
+
+@media screen and (min-width: 1174px)
+  .ml-social-network:nth-child(5n)
+    border-right: none
+
+  .ml-social-network:nth-child(5n)
+    border-right: 2px dotted #cbcccd
+
+  .ml-social-network:nth-child(n+6)
+    border-top: none
 
 </style>
