@@ -40,8 +40,8 @@ export default {
   name: "home",
   components: {
     Clock
-  }
-};
+  },
+}
 </script>
 
 <style lang="sass">
@@ -186,96 +186,5 @@ body
 
     .ml-new
       background: url(./assets/images/novo.png) no-repeat 95px 15px
-
-.ml-content
-  padding: 40px 0
-  
-  .ml-social
-    display: flex
-    flex-wrap: wrap
-    list-style: none
-    justify-content: center
-
-    &-network 
-      text-align: center
-      min-height: 226px
-      border: 2px dotted #cbcccd
-      background-color: #eff0f0
-      padding: 15px 0px
-      display: flex
-      align-items: center
-      flex-direction: column
-      justify-content: center
-      -webkit-transition: 0.3s all ease-in
-      transition: 0.3s all ease-in
-
-      img.social-logo
-        width: 57px
-        height: 57px
-
-      img.social-question
-        width: 25px
-        height: 25px
-        position: relative
-        left: 60px
-        top: 30px
-
-      p
-        font-size: 23px
-        color: #535353
-        padding-top: 15px
-
-      button
-        width: 90px
-        height: 30px
-        margin-top: 22px
-        background-color: #de2e4d
-        color: #fff
-        font-size: 15px
-        border: none
-        border-radius: 3px
-
-@media screen and (min-width: 180px) and (max-width: 712px)
-  .ml-social-network
-    border: 2px dotted #cbcccd
-    width: 100% !important
-
-  .ml-social-network:not(:last-child)
-    border-bottom: none
-
-@media screen and (min-width: 712px)
-  .ml-social-network
-    border: 2px dotted #cbcccd
-    width: 232px
-
-  .ml-social-network:not(:last-child)
-    border-right: none
-
-@media screen and (min-width: 712px) and (max-width: 942px)
-  .ml-social-network:nth-child(3n)
-    border-right: 2px dotted #cbcccd
-
-  .ml-social-network:nth-child(n+4)
-    border-top: none
-
-@media screen and (min-width: 942px) and (max-width: 1174px)
-  .ml-social-network:nth-child(5n)
-    border-right: none
-
-  .ml-social-network:nth-child(4n)
-    border-right: 2px dotted #cbcccd
-
-  .ml-social-network:nth-child(n+5)
-    border-top: none
-
-@media screen and (min-width: 1174px)
-  .ml-social-network:nth-child(5n)
-    border-right: none
-
-  .ml-social-network:nth-child(5n)
-    border-right: 2px dotted #cbcccd
-
-  .ml-social-network:nth-child(n+6)
-    border-top: none
 
 </style>
