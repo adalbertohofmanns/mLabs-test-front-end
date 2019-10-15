@@ -6,20 +6,20 @@
           <img class="social-question" src="../assets/images/question.png">
           <img class="social-logo" :class="network.name.toLowerCase()" :src="network.image" :alt="network.image">
           <p>{{network.name}}</p>
-          <button id="activateName" @click="sendInfo(network)" v-on:click="activate = true">Adicionar</button>
+          <button @click="sendInfo(network)" v-on:click="activateModal = true">Adicionar</button>
         </div> 
       </div>
     </div>
-    <div id="mlModal" class="ml-modal" v-bind:class="{'ml-modal-active': activate}">
+    <div id="mlModal" class="ml-modal" v-bind:class="{'ml-modal-active': activateModal}">
       <div class="ml-modal-container">
         <div class="ml-modal-header">
           <div class="ml-modal-header-title">
             <div class="ml-modal-header-title-social">
-              <img :src="socialName.image" :alt="socialName.name">
+              <img :src="selectedSocial.image" :alt="selectedSocial.name">
               <div class="ml-modal-header-icon"></div>
-              <span>{{socialName.title}} </span>
+              <span>{{selectedSocial.title}} </span>
             </div>
-            <a href="javascript:;" v-on:click="activate = false" class="ml-modal-header-close">X</a>
+            <a href="javascript:;" v-on:click="activateModal = false" class="ml-modal-header-close">X</a>
           </div>
           <div class="ml-modal-header-progress">
             <div class="ml-modal-header-progress-container">
@@ -37,7 +37,7 @@
         <div class="ml-modal-body">
           <ul>
             <div v-for="page in pages" v-bind:key="page.id">
-              <li v-show="page.name">
+              <li v-if="page.channel_key === selectedSocial.name.toLowerCase()">
                 <div class="ml-modal-body-icon">
                   <img :src="page.picture" :alt="page.name">
                   <div class="ml-modal-body-text">
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="ml-modal-footer">
-          <button v-on:click="activate = false">VOLTAR</button>
+          <button v-on:click="activateModal = false">VOLTAR</button>
           <button>PRÓXIMO <i class="fa fa-long-arrow-right"></i></button>
         </div>
       </div>
@@ -70,9 +70,10 @@
   export default {
     data () {
       return {
-        activate: false,
-        socialName: '',
+        activateModal: false,
+        selectedSocial: '',
         pages: [],
+        filteredPages: [],
         networks: [
           {name: 'FACEBOOK', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
           {name: 'TWITTER', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
@@ -99,9 +100,8 @@
 
     methods: {
       sendInfo(network) {
-          this.socialName = network;
-      },
-
+        this.selectedSocial = network;
+      }
     }
 
   };
