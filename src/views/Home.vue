@@ -4,10 +4,10 @@
       <div class="ml-social" id="ml-social">
         <div v-for="network in networks" v-bind:key="network.id" class="ml-social-network">
           <img class="social-question" src="../assets/images/question.png">
-          <img class="social-logo" :class="network.name.toLowerCase()" :src="network.image" :alt="network.image">
+          <img class="social-logo" :src="network.image" :alt="network.image">
           <p>{{network.name}}</p>
           <button @click="sendInfo(network)" v-on:click="activateModal = true">Adicionar</button>
-        </div> 
+        </div>
       </div>
     </div>
     <div id="mlModal" class="ml-modal" v-bind:class="{'ml-modal-active': activateModal}">
@@ -37,7 +37,7 @@
         <div class="ml-modal-body">
           <ul>
             <div v-for="page in pages" v-bind:key="page.id">
-              <li v-if="page.channel_key === selectedSocial.name.toLowerCase()">
+              <li v-if="page.channel_key == selectedSocial.name">
                 <div class="ml-modal-body-icon">
                   <img :src="page.picture" :alt="page.name">
                   <div class="ml-modal-body-text">
@@ -47,18 +47,21 @@
                     </p>
                   </div>
                 </div>
-                <input type="radio" name="ml_conect_page" :id="page.id">
+                <input type="radio" name="newPage" v-model="newPage" :value="page.id" :id="page.id" />
               </li>
             </div>
           </ul>
-          <div class="ml-modal-body-info">
+          <div v-if="!notSelected" class="ml-modal-body-info">
             Não encontrou sua página?<br><br>
             <a href="javascript:;">clique para atualizar as permissões.</a>
+          </div>
+          <div v-if="notSelected" class="ml-modal-body-info">
+            Escolha uma Página
           </div>
         </div>
         <div class="ml-modal-footer">
           <button v-on:click="activateModal = false">VOLTAR</button>
-          <button>PRÓXIMO <i class="fa fa-long-arrow-right"></i></button>
+          <button v-on:click="addPage">PRÓXIMO <i class="fa fa-long-arrow-right"></i></button>
         </div>
       </div>
     </div>
@@ -67,23 +70,26 @@
 
 <script>
   import axios from 'axios';
+  import VueLocalStorage from 'vue-localstorage';
   export default {
     data () {
       return {
         activateModal: false,
         selectedSocial: '',
         pages: [],
-        filteredPages: [],
+        conectedPages: [],
+        newPage: null,
+        notSelected: false,
         networks: [
-          {name: 'FACEBOOK', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
-          {name: 'TWITTER', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
-          {name: 'INSTAGRAM', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
-          {name: 'GOOGLE MEU NEGÓCIO', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
-          {name: 'PINTEREST', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
-          {name: 'LINKEDIN', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
-          {name: 'YOUTUBE', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
-          {name: 'WHATSAPP', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
-          {name: 'GOOGLE ANALYTICS', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
+          {pages: [1], name: 'facebook', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
+          {pages: [], name: 'twitter', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
+          {pages: [], name: 'instagram', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
+          {pages: [], name: 'google meu negócio', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
+          {pages: [], name: 'pinterest', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
+          {pages: [], name: 'linkedin', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
+          {pages: [], name: 'youtube', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
+          {pages: [], name: 'whatsapp', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
+          {pages: [], name: 'google analytics', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
         ]
       }
     },
@@ -92,16 +98,47 @@
       axios.get('https://demo2697181.mockable.io/pages')
       .then(response => {
         this.pages = response.data.data;
+        const parsed = JSON.stringify(this.networks);
+        localStorage.setItem('networks', parsed);
       })
       .catch(e => {
         this.errors.push(e)
       })
     },
 
+    mounted () {
+      if (localStorage.getItem('conectedPages')) {
+        try {
+          this.cats = JSON.parse(localStorage.getItem('conectedPages'));
+        } catch (error) {
+          localStorage.removeItem('cats');
+        }
+      }
+    },
+
     methods: {
       sendInfo(network) {
         this.selectedSocial = network;
-      }
+      },
+      addPage (newPage) {
+        if (!this.newPage) {
+          this.notSelected = true;
+          return; 
+        };
+        this.conectedPages.push(this.newPage);
+        this.newPage = '';
+        this.savePages();
+      },
+      savePages () {
+        const parsed = JSON.stringify(this.conectedPages);
+        localStorage.setItem('conectedPages', parsed);
+        setTimeout(() => this.activateModal=false, 500);
+      },
+      removePage (index) {
+        this.conectedPages.splice(index, 1);
+        this.savePages();
+      },
+
     }
 
   };
@@ -150,6 +187,7 @@
         font-size: 23px
         color: #535353
         padding-top: 15px
+        text-transform: uppercase
 
       button
         width: 90px
