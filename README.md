@@ -4,12 +4,12 @@ Project Vue for test at mLabs
 Before all, install
 
     https://nodejs.org/en/ 
-
     https://www.npmjs.com/get-npm
 
-Now Vue
 
-    npm install -g @vue/cli-service-global
+Install dependencies
+
+    npm install
 
 To run the project(inside project folder)
 
