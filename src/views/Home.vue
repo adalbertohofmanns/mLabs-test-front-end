@@ -2,11 +2,23 @@
   <section class="bg-whitesmoke">
     <div class="ml-container ml-content">
       <div class="ml-social" id="ml-social">
-        <div v-for="network in networks" v-bind:key="network.id" class="ml-social-network">
-          <img class="social-question" src="../assets/images/question.png">
-          <img class="social-logo" :src="network.image" :alt="network.image">
-          <p>{{network.name}}</p>
-          <button @click="sendInfo(network)" v-on:click="activateModal = true">Adicionar</button>
+        <div v-for="network in socialBox" v-bind:key="network.id" class="ml-social-network">
+          
+          <div v-if="network.pages >= 0 " class="ml-social-network-conected-not" >
+            <img class="social-question" src="../assets/images/question.png">
+            <img class="social-logo" :src="network.image" :alt="network.image">
+            <p>{{network.name}}</p>
+            <button @click="sendInfo(network)" v-on:click="activateModal = true">Adicionar</button>
+          </div>
+          
+          <div v-else :class="network.class">
+            <div class="ml-background">
+              <header><span>{{ network.pages[0][0].name }}</span></header>
+              <div class="ml-icon">
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -17,7 +29,7 @@
             <div class="ml-modal-header-title-social">
               <img :src="selectedSocial.image" :alt="selectedSocial.name">
               <div class="ml-modal-header-icon"></div>
-              <span>{{selectedSocial.title}} </span>
+              <span>{{selectedSocial.title}}</span>
             </div>
             <a href="javascript:;" v-on:click="activateModal = false" class="ml-modal-header-close">X</a>
           </div>
@@ -47,7 +59,7 @@
                     </p>
                   </div>
                 </div>
-                <input type="radio" name="newPage" v-model="newPage" :value="page.id" :id="page.id" />
+                <input type="radio" name="newPage" v-model="newPage" :data-name="page.name" :value="page" :id="page.id" />
               </li>
             </div>
           </ul>
@@ -61,7 +73,7 @@
         </div>
         <div class="ml-modal-footer">
           <button v-on:click="activateModal = false">VOLTAR</button>
-          <button v-on:click="addPage">PRÓXIMO <i class="fa fa-long-arrow-right"></i></button>
+          <button :data-social="selectedSocial.class" v-on:click="addPage">PRÓXIMO <i class="fa fa-long-arrow-right"></i></button>
         </div>
       </div>
     </div>
@@ -70,7 +82,6 @@
 
 <script>
   import axios from 'axios';
-  import VueLocalStorage from 'vue-localstorage';
   export default {
     data () {
       return {
@@ -81,16 +92,17 @@
         newPage: null,
         notSelected: false,
         networks: [
-          {pages: [1], name: 'facebook', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
-          {pages: [], name: 'twitter', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
-          {pages: [], name: 'instagram', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
-          {pages: [], name: 'google meu negócio', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
-          {pages: [], name: 'pinterest', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
-          {pages: [], name: 'linkedin', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
-          {pages: [], name: 'youtube', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
-          {pages: [], name: 'whatsapp', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
-          {pages: [], name: 'google analytics', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
-        ]
+          {pages: [], class: 'facebook', name: 'facebook', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
+          {pages: [], class: 'twitter', name: 'twitter', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
+          {pages: [], class: 'instagram', name: 'instagram', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
+          {pages: [], class: 'google', name: 'google meu negócio', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
+          {pages: [], class: 'pinterest', name: 'pinterest', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
+          {pages: [], class: 'linkedin', name: 'linkedin', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
+          {pages: [], class: 'youtube', name: 'youtube', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
+          {pages: [], class: 'whatsapp', name: 'whatsapp', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
+          {pages: [], class: 'analytics', name: 'google analytics', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
+        ],
+        socialBox: JSON.parse(localStorage.getItem('networks'))
       }
     },
 
@@ -98,22 +110,14 @@
       axios.get('https://demo2697181.mockable.io/pages')
       .then(response => {
         this.pages = response.data.data;
+        if (localStorage.networks) return true;
         const parsed = JSON.stringify(this.networks);
         localStorage.setItem('networks', parsed);
+        setTimeout(() => document.location.reload(true), 900);
       })
       .catch(e => {
         this.errors.push(e)
       })
-    },
-
-    mounted () {
-      if (localStorage.getItem('conectedPages')) {
-        try {
-          this.cats = JSON.parse(localStorage.getItem('conectedPages'));
-        } catch (error) {
-          localStorage.removeItem('cats');
-        }
-      }
     },
 
     methods: {
@@ -126,23 +130,39 @@
           return; 
         };
         this.conectedPages.push(this.newPage);
-        this.newPage = '';
+        this.renderComponent = false;
         this.savePages();
       },
-      savePages () {
-        const parsed = JSON.stringify(this.conectedPages);
-        localStorage.setItem('conectedPages', parsed);
+      savePages (newPage) {
+        let btnDataSocial = event.target.getAttribute('data-social') //data-social button
+
+        let getPage = this.networks.find(page => page.class == this.newPage.channel_key); // Find Selected network from array
+        let pageGeted = JSON.parse( localStorage.getItem('networks') ); // get all Socialnetworks from localStorage
+        
+        let currentSocial = pageGeted.filter(function(obj){ // Filtering all socialNetworks by selected
+          return obj.class == btnDataSocial;
+        });
+        
+        let position = pageGeted.map(function(pos){ // Get position of selected oi socialNetworks
+          return pos.class; 
+        }).indexOf(btnDataSocial);
+
+        currentSocial[0].pages.push(this.conectedPages); // Pushing page to the selected socialNetwork
+
+        pageGeted.splice( position, 1, currentSocial[0] ); // Array completed, selected social with his page 
+
+        localStorage.setItem('networks', JSON.stringify(pageGeted));//saving to localStorage
         setTimeout(() => this.activateModal=false, 500);
+        this.newPage = '';
+        setTimeout(() => document.location.reload(true), 900);
       },
       removePage (index) {
         this.conectedPages.splice(index, 1);
         this.savePages();
-      },
-
+      }
     }
-
   };
-
+  
 </script>
 
 <style lang="sass">
@@ -151,19 +171,91 @@
 
 .ml-content
   padding: 40px 0
-    
+
+.facebook
+  background: url(https://app.mlabs.com.br/assets/channels/facebook_dashboard_logged.png) no-repeat 10px 40px #3A589B
+
+.twitter
+  background: url(https://app.mlabs.com.br/assets/channels/twitter_dashboard_logged.png) no-repeat 10px 40px #28AAE1
+
+.instagram
+  .ml-background
+    background-image: linear-gradient(46deg, #FEC35F 0%, #E5385C 49%, #A435B8 100%)
+    .ml-icon
+      background: url(https://app.mlabs.com.br/assets/channels/instagram_dashboard_logged.png) no-repeat 10px 0px
+      width: 80px
+      height: 80px
+      background-size: 100px
+
+.google
+  .ml-background
+    background-image: linear-gradient(45deg, #4c8bf5, #495ab9)
+    .ml-icon
+      background: url(https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logged.png) no-repeat 10px 10px
+      width: 80px
+      height: 80px
+      background-size: 70px
+
+.pinterest
+  background: url(https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logged.png) no-repeat 10px 40px #AA2529
+
+.linkedin
+  background: url(https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logged.png) no-repeat 10px 40px #1A85B7
+
+.youtube
+  background: url(https://app.mlabs.com.br/assets/channels/youtube_dashboard_logged.png) no-repeat 10px 40px #cc181e
+
+.whatsapp
+  background: url(https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logged.png) no-repeat 10px 40px  #25D366
+
+.analytics
+  background: url(https://app.mlabs.com.br/assets/channels/analytics_dashboard_logged.png) no-repeat 10px 40px  #F27902
+
+
+.facebook,
+.twitter,
+.instagram,
+.google,
+.pinterest,
+.linkedin,
+.youtube,
+.whatsapp,
+.analytics,
+  background-size: 100px
+  width: 100%
+  height: 100%
+  -webkit-transition: 0.2s all ease-in-out
+  transition: 0.2s all ease-in-out
+
+  &:hover
+    transform: scale(1.1)
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.2)
+
+  header
+    color: #fff
+    padding: 10px 20px
+    background-color: rgba(0,0,0,.2)
+
+  .ml-background
+    width: 100%
+    height: 100%
+
 .ml-social
     display: flex
     flex-wrap: wrap
     list-style: none
     justify-content: center
 
-    &-network 
+    &-network-conected-not
+      display: flex
+      align-items: center
+      flex-direction: column
+
+    &-network
       text-align: center
       min-height: 226px
       border: 2px dotted #cbcccd
       background-color: #eff0f0
-      padding: 15px 0px
       display: flex
       align-items: center
       flex-direction: column
@@ -274,7 +366,7 @@
       align-items: center
       height: 70px
       padding: 10px 20px
-      
+
       img
         width: 35px
         height: 35px
@@ -355,7 +447,7 @@
         justify-content: space-between
         align-items: center
         border-bottom: #fff solid 1px
-        
+
         .ml-modal-body-icon
           display: flex
           justify-content: flex-start
@@ -377,7 +469,7 @@
 
       strong
         font-size: 15px
-      
+
       a
         font-size: 13px
 
@@ -408,5 +500,4 @@
     button:last-of-type
       color: #fff
       background-color: #498fe2
-      
 </style>
