@@ -81,88 +81,98 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  export default {
-    data () {
-      return {
-        activateModal: false,
-        selectedSocial: '',
-        pages: [],
-        conectedPages: [],
-        newPage: null,
-        notSelected: false,
-        networks: [
-          {pages: [], class: 'facebook', name: 'facebook', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
-          {pages: [], class: 'twitter', name: 'twitter', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
-          {pages: [], class: 'instagram', name: 'instagram', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
-          {pages: [], class: 'google', name: 'google meu negócio', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
-          {pages: [], class: 'pinterest', name: 'pinterest', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
-          {pages: [], class: 'linkedin', name: 'linkedin', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
-          {pages: [], class: 'youtube', name: 'youtube', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
-          {pages: [], class: 'whatsapp', name: 'whatsapp', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
-          {pages: [], class: 'analytics', name: 'google analytics', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
-        ],
-        socialBox: JSON.parse(localStorage.getItem('networks'))
-      }
-    },
-
-    beforeMount() {
-      axios.get('https://demo2697181.mockable.io/pages')
-      .then(response => {
-        this.pages = response.data.data;
-        if (localStorage.networks) return true;
-        const parsed = JSON.stringify(this.networks);
-        localStorage.setItem('networks', parsed);
-        setTimeout(() => document.location.reload(true), 900);
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    },
-
-    methods: {
-      sendInfo(network) {
-        this.selectedSocial = network;
-      },
-      addPage (newPage) {
-        if (!this.newPage) {
-          this.notSelected = true;
-          return; 
-        };
-        this.conectedPages.push(this.newPage);
-        this.renderComponent = false;
-        this.savePages();
-      },
-      savePages (newPage) {
-        let btnDataSocial = event.target.getAttribute('data-social') //data-social button
-
-        let getPage = this.networks.find(page => page.class == this.newPage.channel_key); // Find Selected network from array
-        let pageGeted = JSON.parse( localStorage.getItem('networks') ); // get all Socialnetworks from localStorage
-        
-        let currentSocial = pageGeted.filter(function(obj){ // Filtering all socialNetworks by selected
-          return obj.class == btnDataSocial;
-        });
-        
-        let position = pageGeted.map(function(pos){ // Get position of selected oi socialNetworks
-          return pos.class; 
-        }).indexOf(btnDataSocial);
-
-        currentSocial[0].pages.push(this.conectedPages); // Pushing page to the selected socialNetwork
-
-        pageGeted.splice( position, 1, currentSocial[0] ); // Array completed, selected social with his page 
-
-        localStorage.setItem('networks', JSON.stringify(pageGeted));//saving to localStorage
-        setTimeout(() => this.activateModal=false, 500);
-        this.newPage = '';
-        setTimeout(() => document.location.reload(true), 900);
-      },
-      removePage (index) {
-        this.conectedPages.splice(index, 1);
-        this.savePages();
-      }
+import axios from 'axios';
+export default {
+  data () {
+    return {
+      activateModal: false,
+      selectedSocial: '',
+      pages: [],
+      conectedPages: [],
+      newPage: null,
+      notSelected: false,
+      networks: [
+        {pages: [], class: 'facebook', name: 'facebook', title: 'Adicionar Facebook', image: 'https://app.mlabs.com.br/assets/channels/facebook_dashboard_logoff.png'},
+        {pages: [], class: 'twitter', name: 'twitter', title: 'Adicionar twitter', image: 'https://app.mlabs.com.br/assets/channels/twitter_dashboard_logoff.png'},
+        {pages: [], class: 'instagram', name: 'instagram', title: 'Adcionar Instagram', image: 'https://app.mlabs.com.br/assets/channels/instagram_dashboard_logoff.png'},
+        {pages: [], class: 'google', name: 'google meu negócio', title: 'Adicionar Google Meu Negócio', image: 'https://app.mlabs.com.br/assets/channels/google_my_business_dashboard_logoff.png'},
+        {pages: [], class: 'pinterest', name: 'pinterest', title: 'Adicionar Pinterest', image: 'https://app.mlabs.com.br/assets/channels/pinterest_dashboard_logoff.png'},
+        {pages: [], class: 'linkedin', name: 'linkedin', title: 'Adicionar Linkedin', image: 'https://app.mlabs.com.br/assets/channels/linkedin_dashboard_logoff.png'},
+        {pages: [], class: 'youtube', name: 'youtube', title: 'Adicionar Youtube', image: 'https://app.mlabs.com.br/assets/channels/youtube_dashboard_logoff.png'},
+        {pages: [], class: 'whatsapp', name: 'whatsapp', title: 'Adicionar Whatsapp', image: 'https://app.mlabs.com.br/assets/channels/whatsapp_dashboard_logoff.png'},
+        {pages: [], class: 'analytics', name: 'google analytics', title: 'Adicionar Analytics', image: 'https://app.mlabs.com.br/assets/channels/analytics_dashboard_logoff.png'},
+      ],
+      socialBox: JSON.parse(localStorage.getItem('networks'))
     }
-  };
-  
+  },
+
+  beforeMount() {
+    axios.get('http://demo1802281.mockable.io/pages')
+    .then(response => {
+      this.pages = response.data;
+      if (localStorage.networks) return true;
+      const parsed = JSON.stringify(this.networks);
+      localStorage.setItem('networks', parsed);
+      setTimeout(() => document.location.reload(true), 900);
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+  },
+
+  methods: {
+    sendInfo(network) {
+      this.selectedSocial = network;
+    },
+
+    addPage (newPage) {
+      if (!this.newPage) {
+        this.notSelected = true;
+        return; 
+      };
+      this.conectedPages.push(this.newPage);
+      this.renderComponent = false;
+      this.savePages();
+    },
+
+    savePages(newPage) {
+      //data-social button
+      let btnDataSocial = event.target.getAttribute('data-social')
+
+      // Find Selected network from array
+      let getPage = this.networks.find(page => page.class == this.newPage.channel_key);
+      // get all Socialnetworks from localStorage
+      let pageGeted = JSON.parse(localStorage.getItem('networks'));
+      
+      // Filtering all socialNetworks by selected
+      let currentSocial = pageGeted.filter(function(obj){
+        return obj.class == btnDataSocial;
+      });
+      
+      // Get position of selected oi socialNetworks
+      let position = pageGeted.map(function(pos){
+        return pos.class;
+      }).indexOf(btnDataSocial);
+
+      // Pushing page to the selected socialNetwork
+      currentSocial[0].pages.push(this.conectedPages);
+
+      // Array completed, selected social with his page
+      pageGeted.splice(position, 1, currentSocial[0]);
+
+      //saving to localStorage
+      localStorage.setItem("networks", JSON.stringify(pageGeted));
+      setTimeout(() => (this.activateModal = false), 500);
+      this.newPage = "";
+      setTimeout(() => document.location.reload(true), 900);
+    },
+
+    removePage(index) {
+      this.conectedPages.splice(index, 1);
+      this.savePages();
+    }
+  }
+};
 </script>
 
 <style lang="sass">
