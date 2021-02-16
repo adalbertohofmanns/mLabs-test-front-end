@@ -5,7 +5,11 @@
       <div class="ml-container ml-header">
         <div class="ml-header-time"><clock></clock></div>
         <div class="ml-header-my-account-link"><a href="">MINHA CONTA<i class="ml-header-my-account-link-down"></i></a></div>
-        <div class="ml-header-engine"><div class="ml-header-engine-config"></div></div>
+        <div class="ml-header-engine">
+          <router-link to="/about" class="nav-link">
+            <div class="ml-header-engine-config"></div>
+          </router-link>
+        </div>
       </div>
     </div>
     <div class="bB">
@@ -15,14 +19,70 @@
         </div>
         <nav class="ml-menu-nav"> 
           <ul>
-            <li><a href=""><div><img src="./assets/img/dashboard.svg"><p>DASHBOARD</p></div></a></li>
-            <li class="ml-new"><a href=""><div><img src="./assets/img/agendamento.svg"><p>AGENDAR POST</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/calendar.svg"><p>CALENDÁRIO</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/inbox.svg"><p>INBOX</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/news.png"><p>FEED</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/conteudo.svg"><p>WORKFLOW</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/acompanhamento.svg"><p>ACOMPANHAMENTO</p></div></a></li>
-            <li><a href=""><div><img src="./assets/img/relatorios.svg"><p>RELATÓRIOS</p></div></a></li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/dashboard.svg">
+                  <p>DASHBOARD</p>
+                </div>
+              </router-link>
+            </li>
+            <li class="ml-new">
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/agendamento.svg">
+                  <p>AGENDAR POST</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/calendar.svg">
+                  <p>CALENDÁRIO</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/inbox.svg">
+                  <p>INBOX</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/news.png">
+                  <p>FEED</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/conteudo.svg">
+                  <p>WORKFLOW</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/acompanhamento.svg">
+                  <p>ACOMPANHAMENTO</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/" class="nav-link">
+                <div>
+                  <img src="./assets/img/relatorios.svg">
+                  <p>RELATÓRIOS</p>
+                </div>
+              </router-link>
+            </li>
           </ul>
         </nav>
       </div>
