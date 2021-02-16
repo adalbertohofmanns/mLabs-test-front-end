@@ -10,18 +10,18 @@
     <div class="bB">
       <div class="ml-container ml-menu">
         <div class="ml-menu-logo">
-          <a href=""><div><img src="./assets/images/logotipo.png" title="mLabs"></div></a>
+          <a href=""><div><img src="./assets/img/logotipo.png" title="mLabs"></div></a>
         </div>
         <nav class="ml-menu-nav"> 
           <ul>
-            <li><a href=""><div><img src="./assets/images/dashboard.svg"><p>DASHBOARD</p></div></a></li>
-            <li class="ml-new"><a href=""><div><img src="./assets/images/agendamento.svg"><p>AGENDAR POST</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/calendar.svg"><p>CALENDÁRIO</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/inbox.svg"><p>INBOX</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/news.png"><p>FEED</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/conteudo.svg"><p>WORKFLOW</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/acompanhamento.svg"><p>ACOMPANHAMENTO</p></div></a></li>
-            <li><a href=""><div><img src="./assets/images/relatorios.svg"><p>RELATÓRIOS</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/dashboard.svg"><p>DASHBOARD</p></div></a></li>
+            <li class="ml-new"><a href=""><div><img src="./assets/img/agendamento.svg"><p>AGENDAR POST</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/calendar.svg"><p>CALENDÁRIO</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/inbox.svg"><p>INBOX</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/news.png"><p>FEED</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/conteudo.svg"><p>WORKFLOW</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/acompanhamento.svg"><p>ACOMPANHAMENTO</p></div></a></li>
+            <li><a href=""><div><img src="./assets/img/relatorios.svg"><p>RELATÓRIOS</p></div></a></li>
           </ul>
         </nav>
       </div>
@@ -127,7 +127,7 @@ body
     &-config
       width: 16px;
       height: 16px;
-      background: url(./assets/images/icons.png) no-repeat -32px -121px;
+      background: url(./assets/img/icons.png) no-repeat -32px -121px;
       position: relative;
       z-index: 10;
 
@@ -185,6 +185,6 @@ body
             opacity: 1
 
     .ml-new
-      background: url(./assets/images/novo.png) no-repeat 95px 15px
+      background: url(./assets/img/novo.png) no-repeat 95px 15px
 
 </style>

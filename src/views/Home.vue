@@ -5,7 +5,7 @@
         <div v-for="network in socialBox" v-bind:key="network.id" class="ml-social-network">
           
           <div v-if="network.pages >= 0 " class="ml-social-network-conected-not" >
-            <img class="social-question" src="../assets/images/question.png">
+            <img class="social-question" src="../assets/img/question.png">
             <img class="social-logo" :src="network.image" :alt="network.image">
             <p>{{network.name}}</p>
             <button @click="sendInfo(network)" v-on:click="activateModal = true">Adicionar</button>
@@ -424,7 +424,7 @@ export default {
       &-bar
         width: 100%
         height: 100%
-        background: url(../assets/images/conectar-bar.svg)
+        background: url(../assets/img/conectar-bar.svg)
         position: relative
         z-index: 10
 
