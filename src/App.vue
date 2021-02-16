@@ -126,11 +126,11 @@ body
     justify-content: flex-end
 
     &-config
-      width: 16px;
-      height: 16px;
-      background: url(./assets/img/icons.png) no-repeat -32px -121px;
-      position: relative;
-      z-index: 10;
+      width: 16px
+      height: 16px
+      background: url(./assets/img/icons.png) no-repeat -32px -121px
+      position: relative
+      z-index: 10
 
 .ml-menu
   display: flex

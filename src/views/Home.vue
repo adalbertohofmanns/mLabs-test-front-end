@@ -108,7 +108,7 @@ export default {
   },
 
   beforeMount() {
-    axios.get('https://demo1802281.mockable.io/pages')
+    axios.get('https://5c7868346810ec00148d102c.mockapi.io/api/v1/pages')
     .then(response => {
       this.pages = response.data;
       if (localStorage.networks) return true;
