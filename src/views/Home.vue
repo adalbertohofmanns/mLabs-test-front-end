@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <section class="bg-whitesmoke">
     <div class="ml-container ml-content">

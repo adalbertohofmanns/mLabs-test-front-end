@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <span> {{ dateTimeString }} </span>
 </template>
